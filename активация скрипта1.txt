@@ -1,0 +1,15 @@
+./clone.sh /vmfs/volumes/datastore1 AltLinux /vmfs/volumes/datastore1 1
+./clone.sh /vmfs/volumes/VMs WinKonkurs /vmfs/volumes/VMS 2
+chmod
+rm -r
+sh -x
+./clone.sh /vmfs/volumes/600ae6c0-a4009a64-9e94-ac1f6b3c7792 altlinux /vmfs/volumes/600ae6c0-a4009a64-9e94-ac1f6b3c7792 2
+
+./clone.sh /vmfs/volumes/5db70f21-8dc94c5a-fdf2-b42e9973c026 Windows2019student /vmfs/volumes/5db70f21-8dc94c5a-fdf2-b42e9973c026 2
+
+
+
+./clone.sh /vmfs/volumes/5a6be269-1b6e9cfc-aa27-b42e9981c7c8 Windows10-1 /vmfs/volumes/5a6be269-1b6e9cfc-aa27-b42e9981c7c8 2
+
+
+./clone.sh /vmfs/volumes/5a6be269-1b6e9cfc-aa27-b42e9981c7c8 WinServ19-1 /vmfs/volumes/5a6be269-1b6e9cfc-aa27-b42e9981c7c8 2

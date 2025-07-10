@@ -1,0 +1,33 @@
+#!/bin/bash
+
+template="/mnt/hdd-2TB/images/104/vm-104-disk-0.qcow2"
+#templatetwo="/3tb/images/4043/vm-4043-disk-2.qcow2"
+
+dst="/mnt/hdd-2TB/images/"
+log=/opt/copy.log
+
+for i in {202..229};do
+
+echo "Started copy vm $i" | tee -a $log
+mkdir $dst/$i &> /dev/null
+mac=`echo 00:60:2F:$[RANDOM%10]$[RANDOM%10]:$[RANDOM%10]$[RANDOM%10]:$[RANDOM%10]$[RANDOM%10]`
+qemu-img convert -p -f qcow2 -O qcow2 $template "$dst/$i/vm-$i-disk-0.qcow2"
+#qemu-img convert -p -f qcow2 -O qcow2 $templatetwo "$dst/$i/vm-$i-disk-2.qcow2"
+
+rm /etc/pve/qemu-server/$i.conf &> /dev/null
+
+cat >> /etc/pve/qemu-server/$i.conf << EOF
+bootdisk: sata0
+cores: 2	
+sata0: hdd-2TB:$i/vm-$i-disk-0.qcow2,size=30G
+memory: 2048
+name: win10.student
+net0: rtl8139=$mac,bridge=vmbr0
+numa: 0
+ostype: 127
+scsihw: virtio-scsi-pci
+smbios1: uuid=060b45a2-a693-465b-ae26-3cb2eaf84ab7
+sockets: 1
+EOF
+
+done

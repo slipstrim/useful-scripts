@@ -1,0 +1,37 @@
+SAMBA
+apt install chrony
+systemctl enable chrony
+sudo iptables -A INPUT -p TCP --dport 445 -j ACCEPT
+sudo iptables -A INPUT -p UDP --dport 137:138 -j ACCEPT
+sudo iptables -A INPUT -p TCP --dport 139 -j ACCEPT
+apt install iptables-persistent -y
+apt-get install samba
+systemctl enable smbd
+systemctl status smbd
+
+проверка работоспособности \\
+
+nano /etc/samba/smb.conf
+[Backupsrv]
+    comment = BackupFolder
+    path = /mnt/hdd2TB-1/backup
+    public = yes
+    writable = yes
+    read only = no
+    guest ok = yes
+    create mask = 0777
+    directory mask = 0777
+    force create mode = 0777
+    force directory mode = 0777  
+
+    [Backupsrv] — имя общей папки, которое увидят пользователи, подключившись к серверу.
+    comment — свой комментарий для удобства.
+    path — путь на сервере, где будут храниться данные.
+    public — для общего доступа. Установите в yes, если хотите, чтобы все могли работать с ресурсом.
+    writable — разрешает запись в сетевую папку.
+    read only — только для чтения. Установите no, если у пользователей должна быть возможность создавать папки и файлы.
+    guest ok — разрешает доступ к папке гостевой учетной записи.
+    create mask,directory mask,force create mode,force directory mode— при создании новой папки или файла назначаются указанные права. В нашем примере права будут полные.
+
+chmod 777 /mnt/hdd2TB-1/backup
+systemctl restart smbd

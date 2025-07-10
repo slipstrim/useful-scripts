@@ -1,0 +1,50 @@
+старый 45.98:
+
+source /etc/network/interfaces.d/*
+
+auto lo
+iface lo inet loopback
+
+auto enp2s0
+iface enp2s0 inet static
+        address 192.168.45.98/25
+        gateway 192.168.45.1
+        dns-nameservers 192.168.45.67
+# dns-* options are implemented by the resolvconf package, if installed
+
+auto vmbr0
+iface vmbr0 inet static
+        address 192.168.45.99/25
+        bridge-ports none
+        bridge-stp off
+        bridge-fd 0
+
+рабочий 36.22:
+
+source /etc/network/interfaces.d/*
+
+auto lo
+iface lo inet loopback
+
+auto enx00e04c680026
+iface enx00e04c680026 inet dhcp
+#address 192.168.36.2/24
+#netmask 255.255.255.0
+#gateway 192.168.36.1
+
+iface enp32s0 inet manual
+
+iface enp33s0 inet manual
+
+iface enp34s0 inet manual
+
+auto vmbr0
+iface vmbr0 inet static
+        address 192.168.36.22/24
+        gateway 192.168.36.1
+        bridge-ports enx00e04c680026
+        bridge-stp off
+        bridge-fd 0
+        bridge-vlan-aware yes
+        bridge-vids 2-4094
+
