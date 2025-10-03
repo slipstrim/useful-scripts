@@ -1,2 +1,3 @@
-/etc/vmware/vmware.lic
-/etc/vmware/license.cfg
+rm /etc/vmware/vmware.lic
+rm /etc/vmware/license.cfg
+
